@@ -94,3 +94,6 @@ Desktop.ini
 .coverage
 htmlcov/
 .tox/
+
+# ── Environment ─────────────────────────────────────────────────────────────
+labsvenv/
