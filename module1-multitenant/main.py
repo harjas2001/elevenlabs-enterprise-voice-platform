@@ -18,3 +18,9 @@ app.add_middleware(
 )
 
 eleven_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
+
+
+@app.get("/brands")
+def get_brands():
+    """Return list of available brand IDs for the frontend selector."""
+    return {"brands": list_brands()}
