@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from elevenlabs.client import ElevenLabs
+# from elevenlabs.client import ElevenLabs
+import httpx
 from agent_loader import load_brand_config, list_brands
 
 load_dotenv()
@@ -17,7 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-eleven_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+ELEVENLABS_SIGNED_URL_ENDPOINT = "https://api.elevenlabs.io/v1/convai/conversation/get_signed_url"
 
 
 @app.get("/brands")
@@ -43,14 +45,24 @@ def get_signed_url(brand_id: str = Query(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
     # Call ElevenLabs to generate a signed URL for this agent
-    response = eleven_client.conversational_ai.get_signed_url(
-        agent_id=config["agent_id"]
+    el_response = httpx.get(
+        ELEVENLABS_SIGNED_URL_ENDPOINT,
+        params={"agent_id": config["agent_id"]},
+        headers={"xi-api-key": ELEVENLABS_API_KEY}
     )
+
+    if el_response.status_code != 200:
+        raise HTTPException(
+            status_code=502,
+            detail=f"ElevenLabs API error: {el_response.text}"
+        )
+    
+    signed_url = el_response.json()["signed_url"]
 
     # Return the signed URL plus everything the frontend needs to
     # configure itself for this brand
     return {
-        "signed_url":    response.signed_url,
+        "signed_url":    signed_url,
         "agent_name":    config["agent_name"],
         "first_message": config["first_message"],
         "theme_color":   config["theme_color"],
