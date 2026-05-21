@@ -10,6 +10,11 @@ from pathlib import Path
 
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "").strip()
+ELEVENLABS_SIGNED_URL_ENDPOINT = "https://api.elevenlabs.io/v1/convai/conversation/get_signed_url"
+
+print(f"[DEBUG] API key loaded: {ELEVENLABS_API_KEY[:8] if ELEVENLABS_API_KEY else 'NONE'}...")
+
 app = FastAPI(title="ElevenLabs Multi-Tenant Agent Platform")
 
 app.add_middleware(
@@ -18,9 +23,6 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
-
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-ELEVENLABS_SIGNED_URL_ENDPOINT = "https://api.elevenlabs.io/v1/convai/conversation/get_signed_url"
 
 
 @app.get("/brands")
