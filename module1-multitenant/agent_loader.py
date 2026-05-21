@@ -63,3 +63,8 @@ def load_brand_config(brand_id: str) -> dict:
     config["brand_id"] = brand_id
 
     return config
+
+
+def list_brands() -> list[str]:
+    """Return all registered brand IDs."""
+    return list(BRAND_REGISTRY.keys()) 
