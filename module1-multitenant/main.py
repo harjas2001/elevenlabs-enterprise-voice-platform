@@ -56,3 +56,9 @@ def get_signed_url(brand_id: str = Query(...)):
         "theme_color":   config["theme_color"],
         "brand_id":      config["brand_id"],
     }
+
+
+@app.get("/")
+def serve_frontend():
+    """Serve the brand-aware voice interface."""
+    return FileResponse("frontend/index.html")
