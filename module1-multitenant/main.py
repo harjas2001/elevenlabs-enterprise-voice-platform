@@ -6,8 +6,9 @@ from fastapi.responses import FileResponse
 # from elevenlabs.client import ElevenLabs
 import httpx
 from agent_loader import load_brand_config, list_brands
+from pathlib import Path
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 app = FastAPI(title="ElevenLabs Multi-Tenant Agent Platform")
 
