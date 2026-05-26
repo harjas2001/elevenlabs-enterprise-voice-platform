@@ -1,0 +1,99 @@
+# ── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ── Data & outputs (never commit real data) ───────────────────────────────────
+data/
+output/
+outputs/
+*.csv
+*.xlsx
+*.xls
+
+# ── Audio files (TTS/STT pipeline artefacts) ──────────────────────────────────
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.m4a
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Private config (committed as .example only) ───────────────────────────────
+# Rule: if you add a config file, add its .example version and gitignore the real one
+config/*.json
+config/*.yaml
+config/*.txt
+!config/**/*.example.*
+!config/**/brands/*.yaml
+
+# ── Module-specific config folders ────────────────────────────────────────────
+module1-multitenant/config/*.json
+module1-multitenant/config/*.txt
+!module1-multitenant/config/**/*.example.*
+!module1-multitenant/config/brands/*.yaml
+
+module2-crm/config/*.json
+module2-crm/config/*.txt
+!module2-crm/config/**/*.example.*
+
+module3-escalation/config/*.json
+module3-escalation/config/*.txt
+!module3-escalation/config/**/*.example.*
+
+# ── ElevenLabs artefacts ──────────────────────────────────────────────────────
+# HTML reports from eval toolkit (contain session data)
+reports/
+*.report.html
+
+# ── HubSpot / CRM exports ─────────────────────────────────────────────────────
+contacts/
+crm_exports/
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Windows ───────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── IDEs ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── Environment ─────────────────────────────────────────────────────────────
+labsvenv/
